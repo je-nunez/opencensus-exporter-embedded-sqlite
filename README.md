@@ -8,8 +8,20 @@ link [https://opencensus.io/faq/](https://opencensus.io/faq/) lists briefly
 the objectives and supported programming languages and backends where it can
 export to the collected stats and traces.
 
+Among the many uses of Open Census's distributed tracing and stats have, it
+is also possible with it to find visibility into complex systems to find,
+e.g., the contribution in, or sub-components of, the term **W** in
+[Little's Law](https://en.wikipedia.org/wiki/Little%27s_law), which is
+relevant for capacity analysis. This term **W** is the average time that a
+client request spends in the system. For example, the following link is a
+practical analysis using Little's Law on the bottlenecks of a complex system:
+[Software Infrastructure Bottlenecks in J2EE, by Deepak Goel](https://web.archive.org/web/20050206022643/http://www.onjava.com/pub/a/onjava/2005/01/19/j2ee-bottlenecks.html).
+Open Census can give visibility on the time spent in the components of
+complex systems.
+
 Sometimes it is necessary to export the traces to an embedded and small, but
-easily queryable, backend. SQLite fits this role.
+easily queryable, backend, due to a restriction in the running environment.
+SQLite fits this role.
 
 # Run
 
