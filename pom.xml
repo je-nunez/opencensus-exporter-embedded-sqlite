@@ -1,0 +1,134 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>OcTraceExporterSqlLite</groupId>
+  <artifactId>OcTraceExporterSqlLite</artifactId>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
+
+  <name>An example of exporting Open Census Trace data to SqlLite</name>
+
+  <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <mainClass>OcTraceExporterSqlLite</mainClass>
+      <maven.compile.java.version>1.8</maven.compile.java.version>
+      <shadedClassifierName>executable</shadedClassifierName>
+  </properties>
+
+  <dependencies>
+
+      <dependency>
+          <groupId>io.opencensus</groupId>
+          <artifactId>opencensus-api</artifactId>
+          <version>0.21.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>io.opencensus</groupId>
+          <artifactId>opencensus-impl</artifactId>
+          <version>0.21.0</version>
+          <scope>runtime</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>org.xerial</groupId>
+          <artifactId>sqlite-jdbc</artifactId>
+          <version>3.27.2.1</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+          <version>1.7.25</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+          <version>1.7.25</version>
+      </dependency>
+
+  </dependencies>
+
+
+  <build>
+      <defaultGoal>clean initialize compile package</defaultGoal>
+      <plugins>
+
+         <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.8.0</version>
+              <configuration>
+                  <source>${maven.compile.java.version}</source>
+                  <target>${maven.compile.java.version}</target>
+                  <compilerArgument>-Xlint:all</compilerArgument>
+                  <showWarnings>true</showWarnings>
+                  <showDeprecation>true</showDeprecation>
+              </configuration>
+         </plugin>
+
+         <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <version>3.1.0</version>
+              <configuration>
+                <archive>
+                  <manifest>
+                    <addClasspath>true</addClasspath>
+                    <classpathPrefix>lib/</classpathPrefix>
+                    <mainClass>${mainclass}</mainClass>
+                  </manifest>
+                </archive>
+              </configuration>
+         </plugin>
+
+         <plugin>
+           <artifactId>maven-assembly-plugin</artifactId>
+           <configuration>
+             <archive>
+               <manifest>
+                 <mainClass>${mainclass}</mainClass>
+               </manifest>
+             </archive>
+             <descriptorRefs>
+               <descriptorRef>jar-with-dependencies</descriptorRef>
+             </descriptorRefs>
+           </configuration>
+           <executions>
+             <execution>
+               <id>make-assembly</id>
+               <phase>package</phase>
+               <goals>
+                 <goal>single</goal>
+               </goals>
+             </execution>
+           </executions>
+         </plugin>
+
+         <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+              <version>1.6.0</version>
+              <executions>
+                  <execution>
+                      <id>run</id>
+                      <goals>
+                          <goal>java</goal>
+                      </goals>
+                   </execution>
+              </executions>
+
+              <configuration>
+                  <mainClass>${mainClass}</mainClass>
+              </configuration>
+
+          </plugin>
+
+
+      </plugins>
+  </build>
+
+</project>
+
